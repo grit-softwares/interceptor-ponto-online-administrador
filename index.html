@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirecionando...</title>
+    <script>
+		window.onload = () => {
+			const hash = window.location.hash; // Ex: #access_token=abc123&expires_at=...
+			const params = new URLSearchParams(hash.replace('#', ''));
+
+			const token = params.get('access_token');
+			if (token) {
+				// Redireciona com nome alternativo de parâmetro
+				const safeParam = encodeURIComponent(token);
+				const finalUrl = `https://ponto-online-admin.flutterflow.app/recuperar-senha-step-two?k=${safeParam}`;
+				window.location.replace(finalUrl);
+			} else {
+				// Caso não tenha token, redireciona para home ou página de erro
+				window.location.replace("https://ponto-online-admin.flutterflow.app/login");
+			}
+		};
+    </script>
+</head>
+<body>
+<p>Redirecionando, aguarde...</p>
+</body>
+</html>
