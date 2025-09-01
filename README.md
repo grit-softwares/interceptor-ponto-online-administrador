@@ -1,1 +1,0 @@
-# interceptor-ponto-online-administrador
