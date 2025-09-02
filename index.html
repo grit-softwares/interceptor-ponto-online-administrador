@@ -11,7 +11,7 @@
             const token = params.get('access_token');
 
             if (!token) {
-                window.location.replace("https://ponto-online-administrador.flutterflow.app/login");
+                window.location.replace("https://ponto-online-admin.flutterflow.app/login");
                 return;
             }
 
@@ -30,14 +30,14 @@
                 const role = result.user?.role;
 
                 if (role === "admin") {
-                    window.location.replace(`https://ponto-online-administrador.flutterflow.app/recuperar-senha-step-two?k=${encodeURIComponent(token)}`);
+                    window.location.replace(`https://ponto-online-admin.flutterflow.app/recuperar-senha-step-two?k=${encodeURIComponent(token)}`);
                 } else if (role === "rh") {
                     window.location.replace(`https://ponto-online-rh.flutterflow.app/recuperar-senha-step-two?k=${encodeURIComponent(token)}`);
                 } else {
-                    window.location.replace("https://ponto-online-administrador.flutterflow.app/login");
+                    window.location.replace("https://ponto-online-admin.flutterflow.app/login");
                 }
             } catch (e) {
-                window.location.replace("https://ponto-online-administrador.flutterflow.app/login");
+                window.location.replace("https://ponto-online-admin.flutterflow.app/login");
             }
         };
     </script>
