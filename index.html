@@ -5,41 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Redirecionando...</title>
     <script>
-        window.onload = async () => {
-            const hash = window.location.hash; // Ex: #access_token=abc123&expires_at=...
-            const params = new URLSearchParams(hash.replace('#', ''));
-            const token = params.get('access_token');
+		window.onload = () => {
+			const hash = window.location.hash; // Ex: #access_token=abc123&expires_at=...
+			const params = new URLSearchParams(hash.replace('#', ''));
 
-            if (!token) {
-                window.location.replace("https://ponto-online-admin.flutterflow.app/login");
-                return;
-            }
-
-            // Consulta o backend para descobrir a role
-            try {
-                const resp = await fetch("https://jlgeugbqxvbvwgtfmucc.supabase.co/functions/v1/usuario-refresh-token", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`
-                    },
-                    body: JSON.stringify({ refresh_token: token })
-                });
-                const result = await resp.json();
-
-                const role = result.user?.role;
-
-                if (role === "admin") {
-                    window.location.replace(`https://ponto-online-admin.flutterflow.app/recuperar-senha-step-two?k=${encodeURIComponent(token)}`);
-                } else if (role === "rh") {
-                    window.location.replace(`https://ponto-online-rh.flutterflow.app/recuperar-senha-step-two?k=${encodeURIComponent(token)}`);
-                } else {
-                    window.location.replace("https://ponto-online-admin.flutterflow.app/login");
-                }
-            } catch (e) {
-                window.location.replace("https://ponto-online-admin.flutterflow.app/login");
-            }
-        };
+			const token = params.get('access_token');
+			if (token) {
+				// Redireciona com nome alternativo de parâmetro
+				const safeParam = encodeURIComponent(token);
+				const finalUrl = `https://ponto-online-admin.flutterflow.app/recuperar-senha-step-two?k=${safeParam}`;
+				window.location.replace(finalUrl);
+			} else {
+				// Caso não tenha token, redireciona para home ou página de erro
+				window.location.replace("https://ponto-online-admin.flutterflow.app/login");
+			}
+		};
     </script>
 </head>
 <body>
