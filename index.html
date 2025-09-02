@@ -4,46 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Redirecionando...</title>
-	<script type="module">
-	  import { createClient } from "https://esm.sh/@supabase/supabase-js";
-	
-	  const supabase = createClient("https://YOUR_PROJECT.supabase.co", "YOUR_ANON_KEY");
-	
-	  window.onload = async () => {
-	    const hash = window.location.hash;
-	    const params = new URLSearchParams(hash.replace('#', ''));
-	
-	    const token = params.get('access_token');
-	    if (!token) {
-	      window.location.replace("https://ponto-online-admin.flutterflow.app/login");
-	      return;
-	    }
-	
-	    // Descobre o usuário
-	    const { data: { user }, error } = await supabase.auth.getUser(token);
-	    if (error || !user) {
-	      window.location.replace("https://ponto-online-admin.flutterflow.app/login");
-	      return;
-	    }
-	
-	    // Exemplo: role no user_metadata
-	    const role = user.user_metadata?.role;
-	
-	    const safeParam = encodeURIComponent(token);
-	    let finalUrl;
-	
-	    if (role === "rh") {
-		  console.log("rh");
-	      finalUrl = `https://ponto-online-rh.flutterflow.app/recuperar-senha-step-two?k=${safeParam}`;
-	    } else {
-		  console.log("admin");
-	      finalUrl = `https://ponto-online-administrador.flutterflow.app/recuperar-senha-step-two?k=${safeParam}`;
-	    }
-	
-	    window.location.replace(finalUrl);
-	  };
-	</script>
+    <script>
+		window.onload = () => {
+			const hash = window.location.hash; // Ex: #access_token=abc123&expires_at=...
+			const params = new URLSearchParams(hash.replace('#', ''));
 
+			const token = params.get('access_token');
+			if (token) {
+				// Redireciona com nome alternativo de parâmetro
+				const safeParam = encodeURIComponent(token);
+				const finalUrl = `https://ponto-online-admin.flutterflow.app/recuperar-senha-step-two?k=${safeParam}`;
+				window.location.replace(finalUrl);
+			} else {
+				// Caso não tenha token, redireciona para home ou página de erro
+				window.location.replace("https://ponto-online-admin.flutterflow.app/login");
+			}
+		};
+    </script>
 </head>
 <body>
 <p>Redirecionando, aguarde...</p>
