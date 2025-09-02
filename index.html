@@ -33,8 +33,10 @@
 	    let finalUrl;
 	
 	    if (role === "rh") {
+		  console.log("rh");
 	      finalUrl = `https://ponto-online-rh.flutterflow.app/recuperar-senha-step-two?k=${safeParam}`;
 	    } else {
+		  console.log("admin");
 	      finalUrl = `https://ponto-online-administrador.flutterflow.app/recuperar-senha-step-two?k=${safeParam}`;
 	    }
 	
